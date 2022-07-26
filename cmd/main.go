@@ -7,6 +7,19 @@ import (
 	"github.com/thegrumpylion/grpc-test/pkg"
 )
 
+var testYaml = `
+service: calculator.Calc
+method: Add
+in:
+  numbers:
+  - 1
+  - 2
+  - 3
+  - 4
+out:
+  number: 10
+`
+
 var rootCmd = &cobra.Command{
   Use: "grpc-test",
   Args: cobra.ExactArgs(1),
