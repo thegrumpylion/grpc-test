@@ -5,6 +5,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/thegrumpylion/grpc-test/pkg"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 var testYaml = `
@@ -25,9 +27,12 @@ var rootCmd = &cobra.Command{
   Args: cobra.ExactArgs(1),
   RunE: func(cmd *cobra.Command, args []string) error {
 
-    pkg.ParseDescriptor(args[0], nil)
+    conn, err := grpc.Dial(":5051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+    if err != nil {
+      log.Fatalf("did not connect: %v", err)
+    }
 
-    return nil
+    return pkg.TestServices(args[0], conn, []byte(testYaml))
   },
 }
 

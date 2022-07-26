@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/thegrumpylion/grpc-test/test/proto";
+option go_package = "github.com/thegrumpylion/grpc-test/test/proto;testpb";
 
 package calculator;
 
