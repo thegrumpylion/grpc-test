@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "github.com/thegrumpylion/grpc-test/test/proto";
+
+package calculator;
+
+service Calc {
+  rpc Add(IntList) returns (Int) {}
+  rpc Sub(IntList) returns (Int) {}
+}
+
+message IntList {
+  repeated int64 numbers = 1;
+}
+
+message Int {
+  int64 number = 1;
+}
