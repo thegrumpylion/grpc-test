@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"reflect"
 
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -74,7 +75,8 @@ func TestServices(path string, cc grpc.ClientConnInterface, tests []byte) error 
     return err
   }
 
-  out, outExpected := dynamicpb.NewMessage(meth.Output()), dynamicpb.NewMessage(meth.Output())
+  out := dynamicpb.NewMessage(meth.Output())
+  outExpected := dynamicpb.NewMessage(meth.Output())
   if err := protojson.Unmarshal(tc.Out, outExpected); err != nil {
     return err
   }
@@ -83,9 +85,19 @@ func TestServices(path string, cc grpc.ClientConnInterface, tests []byte) error 
     return err
   }
 
-  fmt.Println(out)
+  outExpected.Range(func(fd protoreflect.FieldDescriptor, v protoreflect.Value) bool {
+    if !out.Has(fd) {
+      err = fmt.Errorf("field not set: %s", fd.JSONName())
+      return false
+    }
+    if !reflect.DeepEqual(v, out.Get(fd)) {
+      err = fmt.Errorf("value missmatch for field %s: %s %s", fd.JSONName(), v.String(), out.Get(fd).String())
+      return false
+    }
+    return true
+  })
 
-  fmt.Println(outExpected)
-  
-  return nil
+
+
+  return err
 }
