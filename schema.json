@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExampleService gRPC Schema",
+  "type": "object",
+  "properties": {
+    "Cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "The name of the test case."
+          },
+          "Service": {
+            "type": "string",
+            "enum": [
+              "example.ExampleService"
+            ],
+            "description": "The name of the service to test."
+          },
+          "Method": {
+            "type": "string",
+            "enum": [
+              "CreateItem",
+              "GetItem"
+            ],
+            "description": "The name of the method to invoke."
+          },
+          "In": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the item to create."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "The description of the item."
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The ID of the item to get."
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "Out": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The ID of the created item."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status after item creation."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "status"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The ID of the item."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "The description of the item."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "Name",
+          "Service",
+          "Method",
+          "In",
+          "Out"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "Cases"
+  ],
+  "additionalProperties": false
+}

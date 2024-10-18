@@ -1,0 +1,9 @@
+Cases:
+  - Name: Test create item
+    Service: example.ExampleService
+    Method: CreateItem
+    In:
+      - name: sdf
+    Out:
+      - id: sdf
+        name: sdf

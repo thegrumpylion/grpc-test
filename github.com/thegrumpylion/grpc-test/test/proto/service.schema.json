@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CreateItemRequest": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CreateItemResponse": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GetItemRequest": {
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GetItemResponse": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "properties": {
+    "ExampleService": {
+      "properties": {
+        "CreateItem": {
+          "properties": {
+            "in": {
+              "items": {
+                "$ref": "#/definitions/CreateItemRequest"
+              },
+              "type": "array"
+            },
+            "out": {
+              "items": {
+                "$ref": "#/definitions/CreateItemResponse"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "GetItem": {
+          "properties": {
+            "in": {
+              "items": {
+                "$ref": "#/definitions/GetItemRequest"
+              },
+              "type": "array"
+            },
+            "out": {
+              "items": {
+                "$ref": "#/definitions/GetItemResponse"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "title": "test/proto/service.proto",
+  "type": "object"
+}
